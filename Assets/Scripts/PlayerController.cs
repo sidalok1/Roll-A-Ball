@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 0; 
+    public float speed; 
+    public TextMeshProUGUI countText;
     private Rigidbody rb; 
+    private int count;
     private float movementX;
     private float movementY;
     [SerializeField] private float jumpVal = 5;
@@ -16,6 +19,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>(); 
         spawn = rb.position;
+        count = 0;
+        SetCountText();
     }
 
     private void FixedUpdate() 
@@ -30,6 +35,8 @@ public class PlayerController : MonoBehaviour
      if (other.gameObject.CompareTag("PickUp")) 
      {
           other.gameObject.SetActive(false);
+          count++;
+          SetCountText();
      }
      if (other.gameObject.CompareTag("GND")) {
           onGround = true;
@@ -58,6 +65,11 @@ public class PlayerController : MonoBehaviour
         Vector2 v = movementValue.Get<Vector2>();
         movementX = v.x; 
         movementY = v.y; 
+   }
+
+   void SetCountText() 
+   {
+       countText.text =  "Count: " + count.ToString();
    }
 
     void OnJump () {
