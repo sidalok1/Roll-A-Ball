@@ -15,12 +15,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpVal = 5;
     private bool onGround = true;
     private Vector3 spawn;
+    public GameObject win;
     void Start()
     {
         rb = GetComponent<Rigidbody>(); 
         spawn = rb.position;
         count = 0;
         SetCountText();
+        win.SetActive(false);
     }
 
     private void FixedUpdate() 
@@ -70,6 +72,10 @@ public class PlayerController : MonoBehaviour
    void SetCountText() 
    {
        countText.text =  "Count: " + count.ToString();
+       if (count >= 4)
+       {
+           win.SetActive(true);
+       }
    }
 
     void OnJump () {
